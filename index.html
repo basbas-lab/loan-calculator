@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="SACCO Loan Calculator - Calculate loan payments, interest, and amortization schedule">
-    <title>SACCO Loan Calculator</title>
+    <title data-translate="title">SACCO Loan Calculator</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -12,9 +12,9 @@
 <body>
     <header class="header">
         <div class="container">
-            <h1>SACCO Loan Calculator</h1>
+            <h1 data-translate="title">SACCO Loan Calculator</h1>
             <button id="langToggle" class="lang-toggle" aria-label="Switch language">
-                <span class="lang-text">Switch to Swahili</span>
+                <span class="lang-text" data-translate="switchLang">Switch to Swahili</span>
             </button>
         </div>
     </header>
@@ -22,13 +22,13 @@
     <main class="container">
         <form id="loanForm" class="form card">
             <div class="input-group">
-                <label for="loanAmount">Loan Amount (KES):</label>
+                <label for="loanAmount" data-translate="loanAmount">Loan Amount (KES):</label>
                 <input type="number" id="loanAmount" class="input-field" required min="0" aria-describedby="loanAmountHint">
                 <small id="loanAmountHint" class="input-hint">Enter the total amount you wish to borrow</small>
             </div>
 
             <div class="input-group">
-                <label for="interestRate">Interest Rate:</label>
+                <label for="interestRate" data-translate="interestRate">Interest Rate:</label>
                 <div class="input-wrapper">
                     <input type="number" id="interestRate" class="input-field" required min="0" step="0.01" aria-describedby="interestRateHint">
                     <select id="interestType" class="select-field">
@@ -40,7 +40,7 @@
             </div>
 
             <div class="input-group">
-                <label for="loanTerm">Loan Term:</label>
+                <label for="loanTerm" data-translate="loanTerm">Loan Term:</label>
                 <div class="input-wrapper">
                     <input type="number" id="loanTerm" class="input-field" required min="1" aria-describedby="loanTermHint">
                     <select id="termType" class="select-field">
@@ -52,7 +52,7 @@
             </div>
 
             <div class="input-group">
-                <label for="repaymentFrequency">Repayment Frequency:</label>
+                <label for="repaymentFrequency" data-translate="repaymentFrequency">Repayment Frequency:</label>
                 <select id="repaymentFrequency" class="select-field">
                     <option value="monthly">Monthly</option>
                     <option value="biweekly">Bi-weekly</option>
@@ -61,13 +61,13 @@
             </div>
 
             <div class="input-group">
-                <label for="additionalFees">Additional Fees (KES):</label>
+                <label for="additionalFees" data-translate="additionalFees">Additional Fees (KES):</label>
                 <input type="number" id="additionalFees" class="input-field" min="0" aria-describedby="additionalFeesHint">
                 <small id="additionalFeesHint" class="input-hint">Enter any additional fees associated with the loan</small>
             </div>
 
             <div class="input-group">
-                <label for="extraPayment">Extra Payment (KES):</label>
+                <label for="extraPayment" data-translate="extraPayment">Extra Payment (KES):</label>
                 <div class="input-wrapper">
                     <input type="number" id="extraPayment" class="input-field" min="0" aria-describedby="extraPaymentHint">
                     <select id="extraPaymentFrequency" class="select-field">
@@ -79,36 +79,36 @@
             </div>
 
             <div class="btn-group">
-                <button type="submit" class="btn-primary">Calculate</button>
-                <button type="reset" class="btn-secondary">Reset</button>
+                <button type="submit" class="btn-primary" data-translate="calculate">Calculate</button>
+                <button type="reset" class="btn-secondary" data-translate="reset">Reset</button>
             </div>
         </form>
 
         <section id="results" class="hidden results card">
-            <h2>Loan Summary</h2>
+            <h2 data-translate="loanSummary">Loan Summary</h2>
             <dl class="summary-list">
-                <dt>Regular Payment:</dt>
+                <dt data-translate="regularPayment">Regular Payment:</dt>
                 <dd id="regularPayment"></dd>
-                <dt>Total Interest:</dt>
+                <dt data-translate="totalInterest">Total Interest:</dt>
                 <dd id="totalInterest"></dd>
-                <dt>Total Amount to Repay:</dt>
+                <dt data-translate="totalRepayment">Total Amount to Repay:</dt>
                 <dd id="totalRepayment"></dd>
-                <dt>Loan Payoff Date:</dt>
+                <dt data-translate="payoffDate">Loan Payoff Date:</dt>
                 <dd id="payoffDate"></dd>
             </dl>
 
-            <h3>Amortization Schedule</h3>
+            <h3 data-translate="amortizationSchedule">Amortization Schedule</h3>
             <div class="table-responsive">
                 <table id="amortizationSchedule" class="data-table">
-                    <caption>Detailed breakdown of loan payments over time</caption>
+                    <caption data-translate="loanSummary">Detailed breakdown of loan payments over time</caption>
                     <thead>
                         <tr>
-                            <th scope="col">Payment No.</th>
-                            <th scope="col">Payment Date</th>
-                            <th scope="col">Payment Amount</th>
-                            <th scope="col">Principal</th>
-                            <th scope="col">Interest</th>
-                            <th scope="col">Remaining Balance</th>
+                            <th scope="col" data-translate="paymentNo">Payment No.</th>
+                            <th scope="col" data-translate="paymentDate">Payment Date</th>
+                            <th scope="col" data-translate="paymentAmount">Payment Amount</th>
+                            <th scope="col" data-translate="principal">Principal</th>
+                            <th scope="col" data-translate="interest">Interest</th>
+                            <th scope="col" data-translate="remainingBalance">Remaining Balance</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
