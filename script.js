@@ -25,7 +25,28 @@ const translations = {
         remainingBalance: "Remaining Balance"
     },
     sw: {
-        // ... (Swahili translations remain the same)
+        title: "Kihesabu Mkopo wa SACCO",
+        loanAmount: "Kiasi cha Mkopo (KES):",
+        interestRate: "Riba:",
+        loanTerm: "Muda wa Mkopo:",
+        repaymentFrequency: "Mara ya Kulipa:",
+        additionalFees: "Ada za Ziada (KES):",
+        extraPayment: "Malipo ya Ziada (KES):",
+        calculate: "Hesabu",
+        reset: "Rekebisha",
+        switchLang: "Switch to English",
+        loanSummary: "Muhtasari wa Mkopo",
+        regularPayment: "Malipo ya Kawaida:",
+        totalInterest: "Riba Jumla:",
+        totalRepayment: "Jumla ya Kurudi:",
+        payoffDate: "Tarehe ya Malipo ya Mkopo:",
+        amortizationSchedule: "Ratiba ya Malipo",
+        paymentNo: "Nambari ya Malipo",
+        paymentDate: "Tarehe ya Malipo",
+        paymentAmount: "Kiasi cha Malipo",
+        principal: "Pincipal",
+        interest: "Riba",
+        remainingBalance: "Salio Lililobaki"
     }
 };
 
@@ -35,7 +56,9 @@ let currentLang = 'en';
 const updateLanguage = () => {
     document.querySelectorAll('[data-translate]').forEach(element => {
         const key = element.getAttribute('data-translate');
-        element.textContent = translations[currentLang][key];
+        if (translations[currentLang][key]) {
+            element.textContent = translations[currentLang][key];
+        }
     });
     document.getElementById('langToggle').textContent = translations[currentLang].switchLang;
 };
@@ -46,9 +69,27 @@ document.getElementById('langToggle').addEventListener('click', () => {
     updateLanguage();
 });
 
+// Validate input values
+const validateInputs = () => {
+    const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+    const interestRate = parseFloat(document.getElementById('interestRate').value);
+    const loanTerm = parseInt(document.getElementById('loanTerm').value);
+    
+    if (loanAmount <= 0 || isNaN(loanAmount)) return false;
+    if (interestRate < 0 || isNaN(interestRate)) return false;
+    if (loanTerm <= 0 || isNaN(loanTerm)) return false;
+
+    return true;
+};
+
 // Calculate loan function
 const calculateLoan = (event) => {
     event.preventDefault();
+
+    if (!validateInputs()) {
+        alert(translations[currentLang].invalidInput || 'Invalid input values. Please check and try again.');
+        return;
+    }
 
     // Retrieve and parse input values
     const loanAmount = parseFloat(document.getElementById('loanAmount').value);
@@ -71,8 +112,7 @@ const calculateLoan = (event) => {
     const { numberOfPayments, ratePerPeriod } = getPaymentDetails(repaymentFrequency, interestRate, loanTerm);
 
     // Calculate regular payment
-    const regularPayment = (loanAmount * ratePerPeriod * Math.pow(1 + ratePerPeriod, numberOfPayments)) /
-                           (Math.pow(1 + ratePerPeriod, numberOfPayments) - 1);
+    const regularPayment = calculateRegularPayment(loanAmount, ratePerPeriod, numberOfPayments);
 
     // Generate amortization schedule
     const { schedule, payoffDate, totalInterest } = generateAmortizationSchedule(
@@ -88,10 +128,16 @@ const calculateLoan = (event) => {
     document.getElementById('results').classList.remove('hidden');
 };
 
+// Calculate regular payment
+const calculateRegularPayment = (loanAmount, ratePerPeriod, numberOfPayments) => {
+    return (loanAmount * ratePerPeriod * Math.pow(1 + ratePerPeriod, numberOfPayments)) /
+           (Math.pow(1 + ratePerPeriod, numberOfPayments) - 1);
+};
+
 // Calculate payment details based on frequency
 const getPaymentDetails = (repaymentFrequency, interestRate, loanTerm) => {
     const frequencyMultiplier = { monthly: 1, biweekly: 2, weekly: 4 };
-    const multiplier = frequencyMultiplier[repaymentFrequency];
+    const multiplier = frequencyMultiplier[repaymentFrequency] || 1;
     return {
         numberOfPayments: loanTerm * multiplier,
         ratePerPeriod: interestRate / multiplier
@@ -140,7 +186,7 @@ const generateAmortizationSchedule = (loanAmount, regularPayment, ratePerPeriod,
 // Update payoff date based on repayment frequency
 const updatePayoffDate = (date, frequency) => {
     const frequencyDays = { monthly: 30, biweekly: 14, weekly: 7 };
-    date.setDate(date.getDate() + frequencyDays[frequency]);
+    date.setDate(date.getDate() + frequencyDays[frequency] || 30);
 };
 
 // Display results
@@ -174,8 +220,4 @@ const formatCurrency = (amount) => {
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('loanForm').addEventListener('submit', calculateLoan);
-    document.getElementById('loanForm').addEventListener('reset', () => {
-        document.getElementById('results').classList.add('hidden');
-    });
-    updateLanguage();
-});
+    document.getElementBy
