@@ -6,6 +6,9 @@
   --card-background: #ffffff;
   --border-radius: 8px;
   --transition-speed: 0.3s;
+  --border-color: #e0e0e0;
+  --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 body {
@@ -23,7 +26,7 @@ body {
   margin: 2rem auto;
   padding: 2rem;
   background-color: var(--card-background);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-light);
   border-radius: var(--border-radius);
 }
 
@@ -47,7 +50,7 @@ input[type="number"],
 select {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--border-color);
   border-radius: var(--border-radius);
   font-size: 1rem;
   transition: border-color var(--transition-speed) ease;
@@ -55,7 +58,7 @@ select {
 
 input[type="number"]:focus,
 select:focus {
-  outline: none;
+  outline: 2px solid var(--primary-color);
   border-color: var(--primary-color);
 }
 
@@ -72,7 +75,7 @@ button {
 }
 
 button:hover {
-  background-color: darken(var(--primary-color), 10%);
+  background-color: #2980b9; /* Adjusted manually */
   transform: translateY(-2px);
 }
 
@@ -87,11 +90,11 @@ table {
   margin-top: 1.5rem;
   overflow: hidden;
   border-radius: var(--border-radius);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-light);
 }
 
 th, td {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color);
   padding: 1rem;
   text-align: left;
 }
@@ -106,6 +109,10 @@ tr:nth-child(even) {
   background-color: #f8f9fa;
 }
 
+tr:hover {
+  background-color: #e9ecef;
+}
+
 @media (max-width: 600px) {
   .container {
     width: 95%;
@@ -118,22 +125,21 @@ tr:nth-child(even) {
   margin-bottom: 1.5rem;
 }
 
-input, select, button {
-  margin-bottom: 1rem;
+.input-group, .btn-group {
+  margin-bottom: 1.5rem;
 }
 
-/* New styles for modern look */
 .card {
   background-color: var(--card-background);
   border-radius: var(--border-radius);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-light);
   transition: box-shadow var(--transition-speed) ease;
 }
 
 .card:hover {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-hover);
 }
 
 .btn-group {
@@ -143,8 +149,9 @@ input, select, button {
 
 .btn-secondary {
   background-color: var(--secondary-color);
+  color: #ffffff;
 }
 
 .btn-secondary:hover {
-  background-color: darken(var(--secondary-color), 10%);
+  background-color: #27ae60; /* Adjusted manually */
 }
