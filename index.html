@@ -3,42 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SACCO Loan Calculator - Calculate loan payments, interest, and amortization schedule">
     <title>SACCO Loan Calculator</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
         <div class="container">
             <h1>SACCO Loan Calculator</h1>
-            <button id="langToggle" class="lang-toggle">Switch to Swahili</button>
+            <button id="langToggle" class="lang-toggle" aria-label="Switch language">
+                <span class="lang-text">Switch to Swahili</span>
+            </button>
         </div>
     </header>
+
     <main class="container">
-        <form id="loanForm" class="form">
+        <form id="loanForm" class="form card">
             <div class="input-group">
                 <label for="loanAmount">Loan Amount (KES):</label>
-                <input type="number" id="loanAmount" class="input-field" required min="0">
+                <input type="number" id="loanAmount" class="input-field" required min="0" aria-describedby="loanAmountHint">
+                <small id="loanAmountHint" class="input-hint">Enter the total amount you wish to borrow</small>
             </div>
+
             <div class="input-group">
                 <label for="interestRate">Interest Rate:</label>
                 <div class="input-wrapper">
-                    <input type="number" id="interestRate" class="input-field" required min="0" step="0.01">
+                    <input type="number" id="interestRate" class="input-field" required min="0" step="0.01" aria-describedby="interestRateHint">
                     <select id="interestType" class="select-field">
                         <option value="monthly">Monthly</option>
                         <option value="annual">Annual</option>
                     </select>
                 </div>
+                <small id="interestRateHint" class="input-hint">Enter the interest rate and select if it's monthly or annual</small>
             </div>
+
             <div class="input-group">
                 <label for="loanTerm">Loan Term:</label>
                 <div class="input-wrapper">
-                    <input type="number" id="loanTerm" class="input-field" required min="1">
+                    <input type="number" id="loanTerm" class="input-field" required min="1" aria-describedby="loanTermHint">
                     <select id="termType" class="select-field">
                         <option value="months">Months</option>
                         <option value="years">Years</option>
                     </select>
                 </div>
+                <small id="loanTermHint" class="input-hint">Enter the duration of the loan</small>
             </div>
+
             <div class="input-group">
                 <label for="repaymentFrequency">Repayment Frequency:</label>
                 <select id="repaymentFrequency" class="select-field">
@@ -47,44 +59,70 @@
                     <option value="weekly">Weekly</option>
                 </select>
             </div>
+
             <div class="input-group">
                 <label for="additionalFees">Additional Fees (KES):</label>
-                <input type="number" id="additionalFees" class="input-field" min="0">
+                <input type="number" id="additionalFees" class="input-field" min="0" aria-describedby="additionalFeesHint">
+                <small id="additionalFeesHint" class="input-hint">Enter any additional fees associated with the loan</small>
             </div>
+
             <div class="input-group">
                 <label for="extraPayment">Extra Payment (KES):</label>
                 <div class="input-wrapper">
-                    <input type="number" id="extraPayment" class="input-field" min="0">
+                    <input type="number" id="extraPayment" class="input-field" min="0" aria-describedby="extraPaymentHint">
                     <select id="extraPaymentFrequency" class="select-field">
                         <option value="once">One-time</option>
                         <option value="recurring">Recurring</option>
                     </select>
                 </div>
+                <small id="extraPaymentHint" class="input-hint">Enter any extra payments you plan to make</small>
             </div>
-            <button type="submit" class="submit-button">Calculate</button>
+
+            <div class="btn-group">
+                <button type="submit" class="btn-primary">Calculate</button>
+                <button type="reset" class="btn-secondary">Reset</button>
+            </div>
         </form>
-        <div id="results" class="hidden results">
+
+        <section id="results" class="hidden results card">
             <h2>Loan Summary</h2>
-            <p>Regular Payment: <span id="regularPayment"></span></p>
-            <p>Total Interest: <span id="totalInterest"></span></p>
-            <p>Total Amount to Repay: <span id="totalRepayment"></span></p>
-            <p>Loan Payoff Date: <span id="payoffDate"></span></p>
+            <dl class="summary-list">
+                <dt>Regular Payment:</dt>
+                <dd id="regularPayment"></dd>
+                <dt>Total Interest:</dt>
+                <dd id="totalInterest"></dd>
+                <dt>Total Amount to Repay:</dt>
+                <dd id="totalRepayment"></dd>
+                <dt>Loan Payoff Date:</dt>
+                <dd id="payoffDate"></dd>
+            </dl>
+
             <h3>Amortization Schedule</h3>
-            <table id="amortizationSchedule" class="data-table">
-                <thead>
-                    <tr>
-                        <th>Payment No.</th>
-                        <th>Payment Date</th>
-                        <th>Payment Amount</th>
-                        <th>Principal</th>
-                        <th>Interest</th>
-                        <th>Remaining Balance</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
+            <div class="table-responsive">
+                <table id="amortizationSchedule" class="data-table">
+                    <caption>Detailed breakdown of loan payments over time</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Payment No.</th>
+                            <th scope="col">Payment Date</th>
+                            <th scope="col">Payment Amount</th>
+                            <th scope="col">Principal</th>
+                            <th scope="col">Interest</th>
+                            <th scope="col">Remaining Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
     </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 SACCO Loan Calculator. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
